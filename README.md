@@ -1,4 +1,3 @@
- 
- TRTPO-Project
+TRTPO-Project
 
- Ўифратор данных
+Data Encryptor
