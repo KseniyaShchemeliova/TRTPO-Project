@@ -1,3 +1,0 @@
-TRTPO-Project
-
-Data Encryptor
