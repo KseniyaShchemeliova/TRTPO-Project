@@ -22,7 +22,9 @@ Shoes.app title: 'Encryptor', :width => 450, :height => 350 do
   @key = edit_line width: 400, margin: 10
   @ebutton = button 'Start encrypt', margin: 10
   @dbutton = button 'Start decrypt', margin: 10
+  flag = 0
   @ebutton.click do
+    flag = 1
     object = get_data
     whence = @whence.text
     where = if @where.text.empty?
@@ -30,10 +32,17 @@ Shoes.app title: 'Encryptor', :width => 450, :height => 350 do
             else
               @where.text
             end
-    object.work_with_directory(whence, where)
+    object.work_with_directory(whence, where, flag)
   end
   @dbutton.click do
+    flag = 0
     object = get_data
-    object.decryptor
+    whence = @whence.text
+    where = if @where.text.empty?
+              @whence.text + '/decrypt_data'
+            else
+              @where.text
+            end
+    object.work_with_directory(whence, where, flag)
   end
 end

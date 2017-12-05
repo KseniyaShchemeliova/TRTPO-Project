@@ -28,7 +28,6 @@ class Information
     directory.each do |dir|
       @data.delete(dir)
     end
-    p @data
   end
 
   def new_dir(location)
@@ -38,30 +37,28 @@ class Information
     Dir.chdir(location)
   end
 
-  def work_with_directory(location, where)
+  def work_with_directory(location, where, flag)
     new_dir(where)
     directory = found_directory(location)
     if directory.size != 0
       directory.each do |dir|
-        work_with_directory(location + '/' + dir, where + '/' + dir)
+        work_with_directory(location + '/' + dir, where + '/' + dir, flag)
       end
     end
     get_files(location, directory)
     @data.each do |file_name|
       Dir.chdir(location)
-      file = open file_name
+      file = open(file_name, 'rb')
       content = file.read
       file.close
       Dir.chdir(where)
-      p 'way'
-      decryptor = Encryptor.new(where, @key, content)
+      decryptor = if flag.zero?
+                    Decryptor.new(where, @key, content)
+                  else
+                    Encryptor.new(where, @key, content)
+                  end
       decryptor.copy_data(file_name)
     end
   end
 
-  def
-
-  def decryptor
-
-  end
 end
