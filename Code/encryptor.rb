@@ -13,13 +13,12 @@ class Encryptor
   def copy_data(file_name)
     max = found_max
     message = get_message(max.to_i)
-    file = open(file_name, 'w')
+    file = open(file_name, 'wb')
     file.write(message)
     file.close
   end
 
   def get_correct_data(max)
-    @data = @data.sub(' ','')
     correct_data = Array.new
     correct_data[0] = Array.new(max)
     i = 0
@@ -44,7 +43,6 @@ class Encryptor
     max_i = correct_data.size
     message = Array.new(max_j)
     message[i] = Array.new(max_i)
-    message
     @key.each do |index|
       @other << index.to_i
       while j < max_i
@@ -86,14 +84,14 @@ class Encryptor
     message = get_other_message(max, message, correct_data)
     message = get_string(message)
     message
-    message
   end
 
   def get_string(message)
     line = ''
+    message.delete(message.last)
     message.each do |item|
       item.each do |letter|
-        next if letter.nil?
+        letter = ' ' if letter.nil?
         line += letter
       end
     end
@@ -121,5 +119,4 @@ class Encryptor
     end
     max
   end
-
 end
